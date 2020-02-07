@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+	<bean name="quartzScheduler"
+		  class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="configLocation" value="classpath:config/quartz.properties"/>
+		<!--可选，QuartzScheduler 启动时更新己存在的Job，这样就不用每次修改targetObject后删除qrtz_job_details表对应记录了 -->
+	    <property name="overwriteExistingJobs" value="true" />
+	    <!-- 设置自动启动 -->
+	    <property name="autoStartup" value="true" /> 
+		<property name="startupDelay" value="1"/>
+		<property name="triggers">
+			<list>
+				<!--<ref bean="bof36Trigger"/>-->
+				<!--<ref bean="simuTrigger"/>-->
+				<!--<ref bean="simuSimpleTrigger"/>-->
+				<!--<ref bean="sinteringTrigger"/>-->
+				<!--<ref bean="sinteringTrigger"/>-->
+			</list>
+		</property>
+	</bean>
+
+
+
+
+         
+	<!-- 异步处理数据一分钟一次[秒] [分] [小时] [日] [月] [周] [年] -->
+	<!-- quartz-2.x的配置CronTriggerFactoryBean
+          quartz-1.8以前配置CronTriggerBean
+ 	 -->
+	<!--<bean id="bof36Trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+		<!--<property name="jobDetail">-->
+			<!--<bean class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+				<!--<property name="targetObject" ref="converterDataService"/>-->
+				<!--<property name="targetMethod" value="executeSql"/>-->
+				<!--<property name="concurrent" value="false"/>-->
+			<!--</bean>-->
+		<!--</property>-->
+		<!--&lt;!&ndash;<property name="cronExpression" value="0/10 * * * * ?"/>&ndash;&gt;-->
+		<!--<property name="cronExpression" value="0 25 7,19 * * ?"/>-->
+	<!--</bean>-->
+
+
+
+	<!--每一分钟的第0秒执行一次:一分钟一次-->
+	<!--<bean id="sinteringTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+		<!--<property name="jobDetail">-->
+			<!--<bean class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+				<!--<property name="targetObject" ref="sinteringService"/>-->
+				<!--<property name="targetMethod" value="tranSinter"/>-->
+				<!--<property name="concurrent" value="false"/>-->
+			<!--</bean>-->
+		<!--</property>-->
+		<!--<property name="cronExpression" value="0 * * * * ?"/>-->
+	<!--</bean>-->
+
+	<!-- 配置项目启动后任务就执行一次,(随spring启动)执行一次 -->
+	<!--<bean id="simuSimpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">-->
+		<!--<property name="jobDetail">-->
+			<!--<bean class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+				<!--<property name="targetObject" ref="simuService"/>-->
+				<!--<property name="targetMethod" value="tranSimu"/>-->
+				<!--<property name="concurrent" value="false"/>-->
+			<!--</bean>-->
+		<!--</property>-->
+		<!--<property name="startDelay" value="500" />-->
+		<!--<property name="repeatInterval" value="0" />-->
+		<!--<property name="repeatCount" value="0" />-->
+	<!--</bean>-->
+
+	<!-- <bean id="checkTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail">
+			<bean class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+				<property name="targetObject" ref="deviceService"/>
+				<property name="targetMethod" value="checkTraffic"/>
+				 <property name="concurrent" value="false"/> 
+			</bean>
+		</property>     
+		<property name="cronExpression" value="0 27 10 L * ?"/>每月最后一天的10点27分触发
+	</bean> -->
+</beans> 
